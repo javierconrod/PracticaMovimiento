@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Threading;
+using System.Diagnostics;
+
 namespace PracticaMovimiento
 {
     /// <summary>
@@ -20,10 +23,44 @@ namespace PracticaMovimiento
     /// </summary>
     public partial class MainWindow : Window
     {
+        Stopwatch stopwatch;
+        TimeSpan tiempoAnterior;
         public MainWindow()
         {
             InitializeComponent();
             miCanvas.Focus();
+
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+
+            //1. Establecer instrucciones
+            ThreadStart threadStart = new ThreadStart(moverEnemigos);
+            //2. Inicializar el thread
+            Thread threadMoverEnemigos = new Thread(threadStart);
+            //3. Ejecutar el thread
+            threadMoverEnemigos.Start();
+        }
+
+        void moverEnemigos()
+        {
+            while (true)
+            {
+                Dispatcher.Invoke(
+                    () =>
+                    {
+                        var tiempoActual = stopwatch.Elapsed;
+                        var deltaTime = tiempoActual - tiempoAnterior;
+                        double leftViejoActual = Canvas.GetLeft(imgViejo);
+                        Canvas.SetLeft(imgViejo, leftViejoActual - (110 * deltaTime.TotalSeconds));
+                        if(Canvas.GetLeft(imgViejo) <= -100)
+                        {
+                            Canvas.SetLeft(imgViejo, 800);
+                        }
+                        tiempoAnterior = tiempoActual;
+                    }
+                    );
+            }
         }
 
         private void miCanvas_KeyDown(object sender, KeyEventArgs e)

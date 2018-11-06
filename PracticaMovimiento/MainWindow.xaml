@@ -8,5 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Canvas Name="miCanvas" KeyDown="miCanvas_KeyDown" Focusable="True">
         <Image Name="imgDinosaurio" Source="dinosaurio.png" Width="153" Height="86" Stretch="Uniform" Canvas.Top="323" Canvas.Left="24"></Image>
+        <Image Name="imgViejo" Source="viejo.jpg" Height="80" Stretch="Uniform" Canvas.Top="50" Canvas.Left="232"></Image>
     </Canvas>
 </Window>
