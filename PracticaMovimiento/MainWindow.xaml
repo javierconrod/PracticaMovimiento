@@ -6,12 +6,19 @@
         xmlns:local="clr-namespace:PracticaMovimiento"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Canvas Name="miCanvas" KeyDown="miCanvas_KeyDown" Focusable="True">
-        <TextBlock Text="No hay intersección en X" Canvas.Top="15" Canvas.Left="10" Name="lblInterseccionX" ></TextBlock>
-        <TextBlock Text="No hay intersección en Y" Canvas.Top="30" Canvas.Left="10" Name="lblInterseccionY"></TextBlock>
-        <TextBlock Text="No hay colisión" Canvas.Top="45" Canvas.Left="10" Name="lblColision"></TextBlock>
+    <Canvas>
+        <Canvas Visibility="Visible" Name="miCanvas" KeyDown="miCanvas_KeyDown" Focusable="True">
+            <TextBlock Text="No hay intersección en X" Canvas.Top="15" Canvas.Left="10" Name="lblInterseccionX" ></TextBlock>
+            <TextBlock Text="No hay intersección en Y" Canvas.Top="30" Canvas.Left="10" Name="lblInterseccionY"></TextBlock>
+            <TextBlock Text="No hay colisión" Canvas.Top="45" Canvas.Left="10" Name="lblColision"></TextBlock>
 
-        <Image Name="imgDinosaurio" Source="dinosaurio.png" Width="153" Height="86" Stretch="Uniform" Canvas.Top="50" Canvas.Left="24"></Image>
-        <Image Name="imgViejo" Source="viejo.jpg" Width="80" Height="80" Stretch="Uniform" Canvas.Top="50" Canvas.Left="232"></Image>
+            <Image Name="imgDinosaurio" Source="dinosaurio.png" Width="153" Height="86" Stretch="Uniform" Canvas.Top="323" Canvas.Left="24"></Image>
+            <Image Name="imgViejo" Source="viejo.jpg" Width="80" Height="80" Stretch="Uniform" Canvas.Top="50" Canvas.Left="232"></Image>
+        </Canvas>
+
+        <Canvas Name="canvasGameOver" Visibility="Collapsed">
+            <TextBlock Text="Game Over"/>
+        </Canvas>
+        
     </Canvas>
 </Window>
