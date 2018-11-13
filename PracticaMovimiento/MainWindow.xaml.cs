@@ -29,6 +29,11 @@ namespace PracticaMovimiento
         enum EstadoJuego { Gameplay, Gameover };
         EstadoJuego estadoActual = EstadoJuego.Gameplay;
 
+        enum Direccion { Arriba, Abajo, Izquierda, Derecha, Ninguna };
+        Direccion direcciónJugador = Direccion.Ninguna;
+
+        double velocidadDino = 15;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +51,31 @@ namespace PracticaMovimiento
             threadMoverEnemigos.Start();
         }
 
+        void moverJugador(TimeSpan deltaTime)
+        {
+            double topDinoActual = Canvas.GetTop(imgDinosaurio);
+            double rightDinoActual = Canvas.GetLeft(imgDinosaurio);
+            switch (direcciónJugador)
+            {
+                case Direccion.Arriba:
+                    Canvas.SetTop(imgDinosaurio, topDinoActual - (velocidadDino * deltaTime.TotalSeconds));
+                    break;
+                case Direccion.Abajo:
+                    Canvas.SetTop(imgDinosaurio, topDinoActual + (velocidadDino * deltaTime.TotalSeconds));
+                    break;
+                case Direccion.Izquierda:
+                    Canvas.SetLeft(imgDinosaurio, rightDinoActual - (velocidadDino * deltaTime.TotalSeconds));
+                    break;
+                case Direccion.Derecha:
+                    Canvas.SetLeft(imgDinosaurio, rightDinoActual + (velocidadDino * deltaTime.TotalSeconds));
+                    break;
+                case Direccion.Ninguna:
+                    break;
+                default:
+                    break;
+            }
+        }
+
         void actualizar()
         {
             while (true)
@@ -53,11 +83,15 @@ namespace PracticaMovimiento
                 Dispatcher.Invoke(
                     () =>
                     {
+
                         var tiempoActual = stopwatch.Elapsed;
                         var deltaTime = tiempoActual - tiempoAnterior;
 
+                        velocidadDino += 10 * deltaTime.TotalSeconds;
+
                         if(estadoActual == EstadoJuego.Gameplay)
                         {
+                            moverJugador(deltaTime);
                             double leftViejoActual = Canvas.GetLeft(imgViejo);
                             Canvas.SetLeft(imgViejo, leftViejoActual - (110 * deltaTime.TotalSeconds));
                             if (Canvas.GetLeft(imgViejo) <= -100)
@@ -119,24 +153,39 @@ namespace PracticaMovimiento
             { 
                 if(e.Key== Key.Up)
                 {
-                    double topDinoActual = Canvas.GetTop(imgDinosaurio);
-                    Canvas.SetTop(imgDinosaurio, topDinoActual - 15);
+                    direccionJugador = Direccion.Arriba;
                 }
                 if (e.Key == Key.Down)
                 {
-                    double topDinoActual = Canvas.GetTop(imgDinosaurio);
-                    Canvas.SetTop(imgDinosaurio, topDinoActual + 15);
+                    direccionJugador = Direccion.Abajo;
                 }
                 if (e.Key == Key.Left)
                 {
-                    double rightDinoActual = Canvas.GetLeft(imgDinosaurio);
-                    Canvas.SetLeft(imgDinosaurio, rightDinoActual - 15);
+                    direcciónJugador = Direccion.Izquierda;
                 }
                 if (e.Key == Key.Right)
                 {
-                    double rightDinoActual = Canvas.GetLeft(imgDinosaurio);
-                    Canvas.SetLeft(imgDinosaurio, rightDinoActual + 15);
+                    direcciónJugador = Direccion.Derecha;
                 }
+            }
+        }
+        private void miCanvas_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Up && direcciónJugador == Direccion.Arriba)
+            {
+                direcciónJugador == Direccion.Ninguna;
+            }
+            if (e.Key == Key.Down && direcciónJugador == Direccion.Abajo)
+            {
+                direcciónJugador == Direccion.Ninguna;
+            }
+            if (e.Key == Key.Left && direcciónJugador == Direccion.Izquierda)
+            {
+                direcciónJugador == Direccion.Ninguna;
+            }
+            if (e.Key == Key.Right && direcciónJugador == Direccion.Derecha)
+            {
+                direcciónJugador == Direccion.Ninguna;
             }
         }
     }

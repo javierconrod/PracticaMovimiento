@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Canvas>
-        <Canvas Visibility="Visible" Name="miCanvas" KeyDown="miCanvas_KeyDown" Focusable="True">
+        <Canvas Visibility="Visible" Name="miCanvas" KeyDown="miCanvas_KeyDown" KeyUp="miCanvas_KeyUp" Focusable="True">
             <TextBlock Text="No hay intersección en X" Canvas.Top="15" Canvas.Left="10" Name="lblInterseccionX" ></TextBlock>
             <TextBlock Text="No hay intersección en Y" Canvas.Top="30" Canvas.Left="10" Name="lblInterseccionY"></TextBlock>
             <TextBlock Text="No hay colisión" Canvas.Top="45" Canvas.Left="10" Name="lblColision"></TextBlock>
